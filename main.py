@@ -1,3 +1,5 @@
+# Simple calculator
+# Code flow
 
 """
 Define the name of the histpry file (eg "history.txt")
