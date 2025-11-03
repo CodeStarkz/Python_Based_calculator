@@ -59,8 +59,57 @@ def clear_history():
     with open(History_file,"w"):
         print("History cleared")
 
-def save_history(calculation) as f:
+def save_history(calculation,result):
+    with open(History_file,"a")as f:
+        f.write(calculation+"="+str(result)+"\n")
+
+def calculate(user_input):
+    input_parts = user_input.split()
+    if len(input_parts) != 3:
+        print("Invalid input")
+        return
+    try:
+        number1 = float(input_parts[0])
+        number2 = float(input_parts[2])
+        operator = input_parts[1]
+
+        if operator == "+":
+            result = number1 + number2
+        elif operator == "-":
+            result = number1 - number2
+        elif operator == "*":
+            result = number1 * number2
+        elif operator == "/":
+            if number2 == 0:
+                print("Cannot divide by zero")
+                return
+            result = number1 / number2
+        else:
+            print("Invalid operator")
+            return
+
+        save_history(user_input, result)
+        return result
+    except ValueError:
+        print("Invalid input")
+        return
 
 
+def main():
+    print('--Simple calculator--')
+    while True:
+        user_input=input("Enter calculation: Or history,clear,exit:")
+        if user_input == "exit":
+            print("Goodbye!")
+            break
+        elif user_input == "history":
+            show_history()
+        elif user_input == "clear":
+            clear_history()
+        else:
+            result = calculate(user_input)
+            if result is not None:
+                print(result)
 
 
+main()
